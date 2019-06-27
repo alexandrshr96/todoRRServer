@@ -60,7 +60,7 @@ class Main extends React.Component{
     }
 
     let obj = {
-      id: parseInt(e.target.id, 10),
+      id: e.target.id,
       text
     }
 
@@ -85,9 +85,9 @@ class Main extends React.Component{
   }
 
   createToggleAllLabel(){
-    const { lcStore, todoItems, countCompleted } = this.props
+    const { todoItems, countCompleted } = this.props
 
-    if(lcStore){//lcStore.getItem().length > 0
+    if(todoItems.length > 0){//lcStore.getItem().length > 0
       let obj = {
         length: todoItems.length,
         counter: countCompleted()

@@ -54,8 +54,8 @@ class Footer extends React.Component {
   }
 
   render(){
-    const { lcStore, filters } = this.props
-    let FooterWrapper = SemanticFooter(lcStore);//lcStore.getItem().length
+    const { todoItems, filters } = this.props
+    let FooterWrapper = SemanticFooter(todoItems.length);//lcStore.getItem().length
     let button = this.createClearButton();
     const { all, active, completed } = visibilityFilters;
     const linksNameFilter = [all, active, completed];

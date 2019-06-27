@@ -26,17 +26,17 @@ const todoItems = (state = [], action) => {
 
     case TOGGLE_TODO:
       return  state.map(item =>
-        item.id === action.id ?
+        item._id === action.id ?
           {...item, completed: !item.completed}
             : item
       )
 
     case DELETE_TODO:
-        return state.filter(item => item.id !== action.id)
+        return state.filter(item => item._id !== action.id)
 
     case EDIT_TODO:
       return state.map(item =>
-        item.id === action.id ?
+        item._id === action.id ?
           {...item, text: action.text}
             : item
       )

@@ -12,9 +12,9 @@ async function getAllItem (ctx) {
   }
 }
 
+
 async function addItem (ctx){
   try {
-    console.log(ctx.request.body)
     const newTodo = new Todo(ctx.request.body)
     const savedTodo = await newTodo.save()
 
@@ -55,8 +55,41 @@ async function deleteItem (ctx) {
   }
 }
 
+async function updateAllItems (ctx) {
+  try {
+    let todos = await Todo.find({})
+
+    await Todo.find({}).updateMany(
+      { text : {$in : /[\w\s\d]/g}},
+      {completed : todos.every(item => item.completed === true) ? false : true}
+    )
+
+    ctx.body = todos
+  } catch (err) {
+    ctx.body = err.message;
+  }
+}
+
+async function removeCheckedItems (ctx) {
+  try {
+    console.log(await Todo.find({}))
+    await Todo.find({}).update(
+      {},
+      { $pull: { completed : true}},
+      { multi: true }
+    )
+
+    ctx.body = todos
+  } catch (err) {
+    ctx.body = err.message;
+  }
+}
+
+
 router.get('/todos', getAllItem)
 router.post('/todos', addItem)
+router.put('/todos', updateAllItems)
+router.delete('/todos', removeCheckedItems)
 router.put('/todos/:id', updateItems)
 router.delete('/todos/:id', deleteItem)
 
